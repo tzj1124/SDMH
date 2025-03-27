@@ -1,0 +1,372 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-color: white;
+}
+
+header {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.navigation {
+    display: flex;
+    justify-content: stretch;
+}
+
+.nav-button {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1.5rem;
+    font-family: "Microsoft YaHei", sans-serif;
+    background-color: #b71c1c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #d32f2f;
+}
+
+.nav-button.active {
+    background-color: white;
+    color: #b71c1c;
+}
+
+main {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.content-section {
+    display: none;
+    width: 100%;
+}
+
+.content-section.active {
+    display: block;
+}
+
+.intro-text {
+    background-color: #b71c1c;
+    color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.intro-text h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.intro-text p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+.steps-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-top: 2rem;
+    border-radius: 8px;
+    background-color: #b71c1c;
+}
+
+.steps-image h2 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.steps {
+    max-width: 100%;
+    height: auto;
+}
+
+.identify-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0px 4px 5px rgba(0,0,0,0.1);
+}
+
+.control-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.input-group label {
+    min-width: 100px;
+    font-weight: 500;
+}
+
+.path-input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.action-button {
+    padding: 0.5rem 1rem;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.action-button:hover {
+    background-color: #357abd;
+}
+
+#exampleBtn {
+    align-self: flex-start;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+#cleanDataBtn {
+    background-color: #f0ad4e;
+}
+
+#cleanDataBtn:hover {
+    background-color: #ec971f;
+}
+
+.loading-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.status-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.result-container {
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 100px;
+}
+
+.result-text {
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.result-item {
+    cursor: pointer;
+    color: #4a90e2;
+    display: inline;
+}
+
+.result-item:hover {
+    text-decoration: underline;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.modal-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+}
+
+/* HerbLibrary Styles */
+.search-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.search-box {
+    flex: 1;
+    display: flex;
+    gap: 1rem;
+}
+
+#searchInput {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.category-select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    min-width: 150px;
+}
+
+.herbs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.herb-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.herb-card:hover {
+    transform: translateY(-5px);
+}
+
+.herb-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.herb-info {
+    padding: 1rem;
+}
+
+.herb-name {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.herb-category {
+    font-size: 0.9rem;
+    color: #666;
+    background-color: #f0f0f0;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* Modal styles for detailed view */
+.detail-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.detail-modal img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+#introduction {
+    width: 100%;
+    background-image: url('images/background.png');
+    background-size: cover;
+    background-position: center;
+    padding: 0;
+}
+
+.intro-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+#identification, #herblibrary {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: white;
+}
