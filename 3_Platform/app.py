@@ -10,6 +10,7 @@ app = Flask(__name__, static_folder='static')
 @app.route('/')
 def index():
     return render_template('index.html')
+
 # 定义OneDCNN模型
 class OneDCNN(nn.Module):
     def __init__(self):
@@ -108,15 +109,6 @@ def process_csv_files(data_path, result_path, root):
                 new_signal.append(avg_signal)
 
             reduced_data = pd.DataFrame({'信号[mV]': new_signal})
-
-            relative_folder = os.path.relpath(os.path.dirname(file_path), data_path)
-            save_folder = os.path.join(result_path, relative_folder)
-            if not os.path.exists(save_folder):
-                os.makedirs(save_folder)
-
-            save_file_path = os.path.join(save_folder, file_name)
-            reduced_data.to_csv(save_file_path, index=False, encoding='utf-8-sig')
-
             signal_data = reduced_data['信号[mV]'].tolist()
             current_row = [file_name] + signal_data
             all_data.append(current_row)
@@ -152,6 +144,7 @@ def process_csv_files(data_path, result_path, root):
 
     out = outputs_outer.argmax(1).tolist()
 
+    # 添加模型输出的名称到结果 DataFrame
     code_dict = {
         0: 'Lini Semen', 1: 'Cassiae Semen', 2: 'Canavaliae Semen', 3: 'Sojae Semen Germinatum',
         4: 'Aesculi Semen', 5: 'Impatientis Semen', 6: 'Oroxyli Semen', 7: 'Momordicae Semen',
@@ -171,6 +164,13 @@ def process_csv_files(data_path, result_path, root):
 
     names = [code_dict[i] for i in out]
 
+    # 将预测的名称添加到第二列
+    data.insert(1, 'Predicted Names', names)
+
+    # 保存最终的结果
+    result_path_final = os.path.join(result_path, 'final_result.csv')
+    data.to_csv(result_path_final, index=False, encoding='utf-8-sig')
+
     return {"names": names}
 
 @app.route('/process_csv', methods=['POST'])
@@ -189,3 +189,4 @@ def process():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
