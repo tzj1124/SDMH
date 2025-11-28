@@ -6,12 +6,12 @@ import torch.nn as nn
 
 app = Flask(__name__, static_folder='static')
 
-# 渲染你的 HTML 文件
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# 定义OneDCNN模型
+
 class OneDCNN(nn.Module):
     def __init__(self):
         super(OneDCNN, self).__init__()
@@ -43,14 +43,14 @@ class OneDCNN(nn.Module):
         x = self.dropout(x)
         return x
 
-# 处理CSV文件并返回结果
+
 def process_csv_files(data_path, result_path, root):
-    # 确保结果保存路径存在
+    
     if not os.path.exists(result_path):
         os.makedirs(result_path)
         print(f'创建输出路径: {result_path}')
 
-    # 获取文件夹中所有 CSV 文件的文件名
+    
     csv_files = []
     for root_dir, _, files in os.walk(data_path):
         for file in files:
@@ -60,7 +60,7 @@ def process_csv_files(data_path, result_path, root):
     if not csv_files:
         return {"error": f"错误：在路径 {data_path} 的所有子文件夹中未找到CSV文件"}
 
-    # 初始化一个列表，用于存储所有 CSV 文件的结果
+    
     all_data = []
 
     first_file_path = csv_files[0]
@@ -69,7 +69,7 @@ def process_csv_files(data_path, result_path, root):
         if first_data.shape[1] < 2:
             return {"error": f'错误: 文件 {os.path.basename(first_file_path)} 没有第二列信号数据'}
 
-        # 删除第一列数值大于60的行
+        
         filtered_first_data = first_data[first_data.iloc[:, 0] <= 60]
 
         new_time, new_signal = [], []
@@ -88,7 +88,7 @@ def process_csv_files(data_path, result_path, root):
     except Exception as e:
         return {"error": f'错误: 读取文件 {os.path.basename(first_file_path)} 时发生错误: {e}'}
 
-    # 处理其他CSV文件
+    
     for file_path in csv_files:
         try:
             file_name = os.path.basename(file_path)
@@ -115,7 +115,7 @@ def process_csv_files(data_path, result_path, root):
         except Exception as e:
             continue
 
-    # 创建一个新的 DataFrame 保存结果
+    
     if len(all_data) > 1:
         result_df = pd.DataFrame(all_data)
     else:
@@ -124,7 +124,7 @@ def process_csv_files(data_path, result_path, root):
     result_path_final = os.path.join(result_path, 'final_result.csv')
     result_df.to_csv(result_path_final, index=False, header=False, encoding='utf-8-sig')
 
-    # 加载数据并进行推理
+    
     data = pd.read_csv(result_path_final)
     X_outer = data.iloc[:, 1:16002].values
     y_outer = data.iloc[:, -1].values
@@ -144,7 +144,7 @@ def process_csv_files(data_path, result_path, root):
 
     out = outputs_outer.argmax(1).tolist()
 
-    # 添加模型输出的名称到结果 DataFrame
+    
     code_dict = {
         0: 'Lini Semen', 1: 'Cassiae Semen', 2: 'Canavaliae Semen', 3: 'Sojae Semen Germinatum',
         4: 'Aesculi Semen', 5: 'Impatientis Semen', 6: 'Oroxyli Semen', 7: 'Momordicae Semen',
@@ -164,10 +164,10 @@ def process_csv_files(data_path, result_path, root):
 
     names = [code_dict[i] for i in out]
 
-    # 将预测的名称添加到第二列
+    
     data.insert(1, 'Predicted Names', names)
 
-    # 保存最终的结果
+    
     result_path_final = os.path.join(result_path, 'final_result.csv')
     data.to_csv(result_path_final, index=False, encoding='utf-8-sig')
 
